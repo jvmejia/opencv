@@ -1,0 +1,37 @@
+import cv2 as cv
+import numpy as np
+
+img = cv.imread('Photos/park.jpg')
+
+cv.imshow("Original", img)
+
+# Crear una matriz de ceros del mismo tamaño que la imagen para su posterior uso
+blank = np.zeros(img.shape[:2], dtype='uint8')
+
+# Separar los canales de color (BGR) de la imagen original
+b, g, r = cv.split(img)
+
+# Crear imágenes individuales para los canales de color (azul, verde y rojo)
+blue = cv.merge([b, blank, blank])  # Conserva solo el canal azul
+green = cv.merge([blank, g, blank])  # Conserva solo el canal verde
+red = cv.merge([blank, blank, r])    # Conserva solo el canal rojo
+
+# Mostrar las imágenes de los canales de color
+cv.imshow('Blue', blue)
+cv.imshow('Green', green)
+cv.imshow('Red', red)
+
+# Imprimir las dimensiones de la imagen original y los canales de color
+print(img.shape)  # Dimensiones de la imagen original
+print(b.shape)    # Dimensiones del canal azul
+print(g.shape)    # Dimensiones del canal verde
+print(r.shape)    # Dimensiones del canal rojo
+
+# Fusionar los canales de color (BGR) para obtener la imagen original nuevamente
+merged = cv.merge([b, g, r])
+
+# Mostrar la imagen fusionada en una ventana llamada "Merged Image"
+cv.imshow('Merged Image', merged)
+
+# Esperar a que se presione una tecla antes de cerrar las ventanas
+cv.waitKey(0)
